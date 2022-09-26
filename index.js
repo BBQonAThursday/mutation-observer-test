@@ -105,32 +105,27 @@ const trustAdditionTest = () => {
     addToCart.insertAdjacentHTML('afterend', trustAdditionHTML);
 };
 
-const config = {
-    selector: '.bhfZaK',
-    parent: document,
-    recursive: true,
-    disconnect: false
+
+options = {
+    childList: true,
+    subtree: true
 }
 
-const callback = () => {
-    // inject built html into the cart
-    console.log(document.querySelector(config.selector));
-    // inserting trust Addition HTML
-    // trustAdditionTest();
+observer = new MutationObserver(callback);
+
+function callback(mutations) {
+  for (let mutation of mutations) {
+    if (mutation.type === 'childList') {
+      // check if the reviews exist and the add to cart exists
+      if(document.querySelector('.bhfZaK') && document.querySelector('.kKYEKR')) {
+        // disconnect observer
+        console.log('reviews and add to cart exist')
+        observer.disconnect();
+        trustAdditionTest();
+        // render test
+      }
+    }
+  }
 }
 
-const observeDOM = (config, callback) => {
-    new MutationObserver(function () {
-        const el = document.querySelector(config.selector);
-        if (el) {
-            if(config.disconnect) this.disconnect();
-            if (typeof callback === "function") callback(el);
-        }
-    }).observe(config.parent || document, {
-        subtree: config.recursive,
-        childList: true
-    });
-}
-
-observeDOM(config, callback);
-
+observer.observe(document, options)

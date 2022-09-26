@@ -123,3 +123,32 @@ addToCart.insertAdjacentHTML('afterend', css);
 addToCart.insertAdjacentHTML('afterend', trustAdditionHTML);
 // addToCart.insertAdjacentElement('beforebegin', reviewBadge);
 // addToCart.insertAdjacentElement('beforebegin', reviewClone);
+
+const config = {
+    selector: '.bhfZaK',
+    parent: document,
+    recursive: true,
+    disconnect: false
+}
+
+const callback = () => {
+    // inject built html into the cart
+    console.log(document.querySelector(config.selector));
+    // inserting trust Addition HTML
+    // trustAdditionTest();
+}
+
+const observeDOM = (config, callback) => {
+    new MutationObserver(function () {
+        const el = document.querySelector(config.selector);
+        if (el) {
+            if(config.disconnect) this.disconnect();
+            if (typeof callback === "function") callback(el);
+        }
+    }).observe(config.parent || document, {
+        subtree: config.recursive,
+        childList: true
+    });
+}
+
+observeDOM(config, callback);
