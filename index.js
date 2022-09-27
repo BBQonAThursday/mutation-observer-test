@@ -1,8 +1,6 @@
 // https://www.electrical.com/Products/Bus-Plugs-BRAH-Electric/100A600VFC
 
 // test conditions
-const reviewBadgeComponent = document.querySelector('.bhfZaK');
-const addToCartComponent = document.querySelector('.kKYEKR');
 
 const buildTest = () => {
   const addToCart = document.querySelector('.kKYEKR');
@@ -106,8 +104,6 @@ const buildTest = () => {
 const options = {
   childList: true,
   subtree: true,
-  reviewBadgeComponent: reviewBadgeComponent,
-  addToCartComponent: addToCartComponent
 }
 
 let previousUrl = '';
@@ -119,7 +115,7 @@ const monitorUrls = () => {
 };
 
 const testInit = (mutations) => {
-  if (reviewBadgeComponent && addToCartComponent) {
+  if (document.querySelector('.bhfZaK') && document.querySelector('.kKYEKR')) {
     observer.disconnect();
     if (!document.querySelector('.trust-addition')) {
       buildTest();
